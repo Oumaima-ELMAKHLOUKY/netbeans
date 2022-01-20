@@ -1,0 +1,33 @@
+index:
+    path: /
+    controller: App\Controller\DefaultController::index
+
+article:
+    path: /article
+    controller: App\Controller\ArticleController::index
+
+newArticle:
+    path: /article/new
+    controller: App\Controller\ArticleController::new
+
+addImageArticle:
+    path: /article/add_image
+    controller: App\Controller\ArticleController:add_image_page
+
+addImageAction:
+    path: /article/add_image_action
+    controller: App\Controller\ArticleController:add_image_action
+
+myArticles:
+    path: /article/mes_articles
+    controller: App\Controller\ArticleController:showMyArticles
+
+monCompte:
+    path: /mon_compte
+    controller: App\Controller\CompteController:index
+
+showArticle:
+    path: /montrerArticle/{id}
+    controller: App\Controller\CompteController:showArticle
+    methods: GET|POST
+

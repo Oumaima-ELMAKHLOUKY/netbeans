@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Blog{% endblock %}
+
+{% block body %}
+    {% if article != null %}
+        <div class="container" style="margin-top: 5%">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <td><h2>{{ article.titre }}</h2></td>
+                </tr>
+                <tr>
+                    <td><img src="{{ asset("articleImages/#{article.imageADDR}") }}"
+                             class="img-thumbnail" style="height: 100px" alt="article"></td>
+                </tr>
+                <tr>
+                    <td>{{ article.content }}</td>
+                </tr>
+                <tr>
+                    <td><h4>Commentaires:</h4>
+                        {% for commentaire in commentaires %}
+                            <div style="border:1px solid black;margin-bottom: 2%;">
+                                Autheur: {{ commentaire.user.username }}<br>
+                                Date publication: {{ commentaire.date|format_datetime('short', 'short', locale='fr') }}<br><br>
+                                <div>
+                                    {{ commentaire.text }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td><h6>Ajouter un commentaire:</h6>
+                        <div style="border:1px solid black;margin-bottom: 2%;">
+                            {{ form(form) }}
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        Il n'y a aucun article
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="overflow-hidden col-6" style="margin-left: 30%">
+                <div class="form-group">
+                    {{ form_start(form) }}
+                    {{ form_label(form.titre) }}<br>
+                    {{ form_widget(form.titre) }}<br>
+                    {{ form_label(form.content) }}<br>
+                    {{ form_widget(form.content) }}<br>
+                    {{ form_label(form.imageADDR) }}<br>
+                    {{ form_widget(form.imageADDR) }}<br>
+                    <a id="addButton" class="btn btn-secondary" onclick="show_image(article_imageADDR);">Prévisualiser l'image</a>
+                    <img id="imageArticle" class="img-thumbnail" src="" alt="image" hidden>
+                    <a id="resetButton" class="btn btn-danger" onclick="resetIMG();" hidden>Reset</a>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+            <div>
+                <a id="addImage" class="btn btn-secondary" onclick="window.location.href='{{ path('addImageArticle') }}'">Ajouter une image à la liste</a><br>
+                Liste d'images:<br>
+                <div class="overflow-auto " style="height: 500px;border:1px solid black;">
+                    {% for image in images %}
+                        <img src="{{ asset("articleImages/#{image}") }}"
+                             class="img-thumbnail" style="height: 100px" alt="article"><br>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function show_image(src) {
+            let img = document.getElementById('imageArticle');
+            let addButton = document.getElementById('addButton');
+            let resetButton = document.getElementById('resetButton');
+
+            if (src.value !== "") {
+                img.src = src.value;
+                img.hidden = false;
+                src.hidden = true;
+                addButton.hidden = true;
+                resetButton.hidden = false;
+            } else {
+                alert("Aucune image n'a été glissé");
+            }
+        }
+
+        function resetIMG() {
+            let img = document.getElementById('imageArticle');
+            let addButton = document.getElementById('addButton');
+            let resetButton = document.getElementById('resetButton');
+            let src = document.getElementById('article_imageADDR');
+
+            img.src = "";
+            img.hidden = true;
+            src.hidden = false;
+            src.value = "";
+            addButton.hidden = false;
+            resetButton.hidden = true;
+        }
+    </script>
+{% endblock javascripts %}

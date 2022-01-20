@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte!{% endblock %}
+
+{% block body %}
+    <div class="container" style="margin-bottom: 5%">
+        <h1>Mon compte ✅</h1>
+    </div>
+    {% if articles != null %}
+        <div class="container">
+            {% for article in articles %}
+                <div class="row">
+                    <div class="col" style="margin-bottom: 2%; height: 375px">
+                        <div class="card" style="width: 18rem;">
+                            <img class="card-img-top" src="{{ asset("articleImages/#{article.imageADDR}") }}"
+                                 alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ article.titre }}</h5>
+                                <p class="card-text">{{ article.content|striptags|slice(0, 80) }}...</p>
+                                <footer class="blockquote-footer">
+                                    <cite>{{ article.user.username }} {{ article.datePublication|format_datetime('short', 'short', locale='fr') }}</cite>
+                                </footer>
+                                <a href="{{ path('showArticle', { 'id': article.id }) }}" class="btn btn-outline-dark">Voir l'article</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overflow-auto col-6" style="margin-bottom: 2%; height: 375px">
+                        <p>Commentaires: </p>
+                        {% for commentairesArticle in commentaires %}
+                            {% if commentairesArticle is not empty %}
+                                {% for commentaires in  commentairesArticle %}
+                                    {% if commentaires.article == article %}
+                                        <div style="border:1px solid black;margin-bottom: 2%;">
+                                            <cite>{{ commentaires.user.username }} {{ commentaires.date|format_datetime('short', 'short', locale='fr') }}</cite>
+                                            <br><br>
+                                            <p>{{ commentaires.text }}</p>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Vous n'avez aucun article</p>
+    {% endif %}
+{% endblock %}
